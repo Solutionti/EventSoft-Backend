@@ -42,9 +42,10 @@ Route::controller(ServiciosController::class)->group(function () {
     Route::post('EntregaKits', 'EntregaKits');
     Route::post('cambiarEstadoPedido', 'cambiarEstadoPedido');
     Route::get('canjearCodigoPromocional', 'canjearCodigoPromocional');
-    
-    
-    
+    Route::post('crearUsuario', 'crearUsuario');
+    // 
+    Route::get('getPedidoDeportista', 'getPedidoDeportista');
+
 });
 
 Route::controller(IniciarsesionController::class)->group(function () {

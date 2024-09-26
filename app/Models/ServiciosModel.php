@@ -166,8 +166,30 @@ class ServiciosModel extends Model
       
     }
 
-    public function crearUsuario() {
+    public function crearUsuario($user) {
+      $users = [
+        "tipo_documento" => $user["tipo_documento"],
+        "documento" => $user["documento"],
+        "nombre" => $user["nombre"],
+        "apellido" => $user["apellido"],
+        "departamento" => $user["departamento"],
+        "ciudad" => $user["ciudad"],
+        "direccion" => $user["direccion"],
+        "telefono" => $user["telefono"],
+        "email" => $user["correo_electronico"],
+        "password" =>  $user["password"],
+        "rol_usuario" => $user["rol_usuario"],
+        "acompanantes" => $user["acompanantes"],
+        "rh" => $user["rh"],
+        "seguro_medico" => $user["seguro_medico"],
+        "fecha_nacimiento" => $user["fecha_nacimiento"],
+        "estado" => $user["estado"],
+        "fecha" => $user["fecha"],
+        "hora" => $user["hora"],
+      ];
 
+      DB::table("users")
+         ->insert($users);
     }
 
     public function crearRegalo($data) {
@@ -247,4 +269,14 @@ class ServiciosModel extends Model
          ->where("codigo_promocional", $codigo)
          ->update($canjeo);
     }
+
+    public function getPedidoDeportista($documento) {
+      $pedido = DB::table("inscripciones")
+                   ->select("*")
+                   ->where("documento", $documento)
+                   ->get();
+
+      return $pedido;
+    }
+
 }

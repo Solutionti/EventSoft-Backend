@@ -184,8 +184,56 @@ class ServiciosController extends Controller
         } 
     }
 
-    public function crearUsuario() {
-
+    public function crearUsuario(Request $request) {
+      try {
+        $nombre = $request->nombre;
+        $apellido = $request->apellido;
+        $telefono = $request->telefono;
+        $documento = $request->documento;
+        $correo = $request->correo;
+        $tpdocumento = "CC";
+        $departamento = "19";
+        $ciudad = "IBAGUE";
+        $direccion = "DIRECCION SIN IDENTIFICAR";
+        $acompanantes = "0";
+        $rh = "O+";
+        $seguro_medico = "SALUD TOTAL";
+        $fechanacimiento = "1993-12-26";
+  
+        $data1 = [
+          "tipo_documento" => $tpdocumento,
+          "documento" => $documento,
+          "nombre" => $nombre,
+          "apellido" => $apellido,
+          "departamento" => $departamento,
+          "ciudad" => $ciudad,
+          "direccion" => $direccion,
+          "telefono" => $telefono,
+          "correo_electronico" => $correo,
+          "password" => Hash::make($documento),
+          "rol_usuario" => 'Administrador',
+          "acompanantes" => $acompanantes,
+          "rh" => $rh,
+          "seguro_medico" => $seguro_medico,
+          "fecha_nacimiento" => $fechanacimiento,
+          "estado" => 'Activo',
+          "fecha" => date('Y-m-d'),
+          "hora" => date('H:i'),
+        ];
+        $this->Servicios->CrearDeportista($data1);
+        
+        return response()->json(
+          [
+            'message' => "El usuario se ha creado en la base de datos",
+            'status' => 200
+          ], 200);
+      }
+      catch(\exception $e) {
+        return response()->json([
+          'status' => 400,
+          'message' => $e->getMessage()
+        ]);
+      }
     }
 
     public function crearRegalo(Request $request) {
@@ -353,4 +401,11 @@ class ServiciosController extends Controller
         ]);
       }
     }
+
+    public function getPedidoDeportista(Request $request) {
+      $documento = $request->documento;
+
+      return $this->Servicios->getPedidoDeportista($documento);
+    }
+   
 }
