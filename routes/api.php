@@ -27,6 +27,9 @@ Route::controller(ServiciosController::class)->group(function () {
     Route::get('getServiciosInicio', 'getServiciosInicio');  
     Route::get('getServicioId', 'getServicioId');  
     Route::post('CrearInscripcionesDetalle', 'CrearInscripcionesDetalle');
+    Route::post('CrearVisitaInscripcion', 'CrearVisitaInscripcion');  
+    Route::post('crearVisitaPagina', 'crearVisitaPagina');  
+    
     // administracion
     Route::get('getUsuariosAdministrador', 'getUsuariosAdministrador'); 
     Route::get('getUsuariosDeportistas', 'getUsuariosDeportistas'); 
@@ -45,6 +48,7 @@ Route::controller(ServiciosController::class)->group(function () {
     Route::post('crearUsuario', 'crearUsuario');
     // 
     Route::get('getPedidoDeportista', 'getPedidoDeportista');
+    
 
 });
 

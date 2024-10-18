@@ -407,5 +407,56 @@ class ServiciosController extends Controller
 
       return $this->Servicios->getPedidoDeportista($documento);
     }
+
+    public function CrearVisitaInscripcion(Request $request) {
+      $servicio = $request->servicio;
+
+      $servicioCant = $this->Servicios->getVisitasProducto($servicio)->vistas + 1;
+
+      try {
+        $this->Servicios->CrearVisitaInscripcion($servicioCant , $servicio);
+
+        return response()->json([
+          'message' => 'visita se ha cambiado correctamente',
+          'status' => 200
+        ]);
+      }
+      catch(\exception $e) {
+        return response()->json([
+          'status' => 400,
+          'message' => $e->getMessage()
+        ]);
+      }
+    }
+
+    public function crearVisitaPagina() {
+      
+      try {
+        if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
+          // IP desde el navegador
+          $ip = $_SERVER['HTTP_CLIENT_IP'];
+        } elseif (!empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {
+          // IP detrás de un proxy
+          $ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
+        } else {
+          // IP estándar
+          $ip = $_SERVER['REMOTE_ADDR'];
+        }
+        $existe = $this->Servicios->getipVisitas($ip);
+
+        if(!$existe->isEmpty()) {
+        }
+        else {
+          $this->Servicios->CrearVisitaPagina($ip);
+        }
+      }
+      catch(\exception $e) {
+        return response()->json([
+          'status' => 400,
+          'message' => $e->getMessage()
+        ]);
+      }
+      
+    }
    
 }

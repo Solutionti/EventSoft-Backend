@@ -279,4 +279,41 @@ class ServiciosModel extends Model
       return $pedido;
     }
 
+    public function getVisitasProducto($servicio) {
+      $vistas = DB::table("servicios")
+                  ->select("vistas")
+                  ->where("codigo_servicio", $servicio)
+                  ->first();
+
+      return $vistas;
+    }
+
+    public function CrearVisitaInscripcion($vistas, $servicio) {
+      $visita = [
+        "vistas" => $vistas
+      ];
+
+      DB::table("servicios")
+        ->where("codigo_servicio", $servicio)
+        ->update($visita);
+    }
+
+    public function getipVisitas($ip) {
+      $visita = DB::table("visitas")
+        ->select("*")
+        ->where("ip", $ip)
+        ->get();
+
+      return $visita;
+    }
+
+    public function CrearVisitaPagina($ip) {
+      $pagina = [
+        "ip" => $ip
+      ];
+
+      DB::table("visitas")
+         ->insert($pagina);
+    }
+
 }
